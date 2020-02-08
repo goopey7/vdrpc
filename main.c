@@ -8,9 +8,9 @@
 
 const char* APPLICATION_ID = "671691503026044938";
 
-const char ext[25][12] = {
-	".docker", ".npmrc", ".travis", ".cpp",	".css", ".cs", ".c", ".htm", ".php", ".sh", ".bash", ".h", ".java", ".json",
-	".js", ".py", ".rb", ".rs", ".go", ".md", ".log", ".git", ".vim", ".xml"
+const char ext[27][12] = {
+	".docker", ".npmrc", ".travis", ".cpp",	".css", ".cs", ".c", ".htm", ".php", ".sh", ".bash", ".hs", ".h", ".java",
+	".json", ".js", ".py", ".rb", ".rs", ".go", ".kt", ".swift", ".md", ".log", ".git", ".vim", ".xml"
 };
 
 void InitDiscord(){
@@ -33,7 +33,7 @@ void UpdatePresence(char *details, char *state, char *largeImageKey, char *large
 
 	int i = 0;
 
-	while(ext[i] != 0)
+	while(i < 27)
 	{
 		if(strstr(largeImageKey, ext[i])){
 			break;
@@ -43,7 +43,7 @@ void UpdatePresence(char *details, char *state, char *largeImageKey, char *large
 
 	char key[32];
 
-	if(i >= 24){
+	if(i == 27){
 		discordPresence.largeImageKey = "default";
 	} else {
 		strcpy(key, ext[i]);

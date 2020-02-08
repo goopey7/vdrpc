@@ -22,6 +22,14 @@
 
 .rs
 
+.hs
+.hsc
+
+.swift
+
+.kt
+.kts
+
 .py
 .pyi
 .pyc
