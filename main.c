@@ -23,12 +23,7 @@ void UpdatePresence(char *details, char *state, char *largeImageKey, char *large
 	DiscordRichPresence discordPresence;
 	memset(&discordPresence, 0, sizeof(discordPresence));
 
-	if(!strcmp(details, "Editing \n")){
-		discordPresence.details = "Editing an unnamed file.";
-	} else {
-		discordPresence.details = details;
-	}
-
+	discordPresence.details = details;
 	discordPresence.state = state;
 
 	int i = 0;
@@ -75,6 +70,10 @@ void MainLoop(){
 		char largeImageKey[32];
 		char largeImageText[128] = "text";
 
+		if(!strcmp(details, "Editing \n")){
+			details = "Editing an unnamed file.";
+		}
+
 		if(strstr(buffer[2], "Size:") != NULL){
 			state = strcat(buffer[2], " bytes");
 		}
@@ -90,7 +89,7 @@ void MainLoop(){
 			}
 		}
 
-		largeImageKey[strlen(largeImageKey + 1)] = '\0'; // add zero byte
+		largeImageKey[strlen(largeImageKey + 1)] = '\0';	// add zero byte
 
 		UpdatePresence(details, state, largeImageKey, largeImageText, start);
 
@@ -101,7 +100,6 @@ void MainLoop(){
 int main(){
 	InitDiscord();
 	MainLoop();
-
 	Discord_Shutdown();
 	return 0;
 }
