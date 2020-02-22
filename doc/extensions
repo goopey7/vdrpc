@@ -67,6 +67,8 @@
 .travis
 .travis.yml
 
+.yml
+
 .npmrc
 
 .docker
@@ -74,10 +76,14 @@
 .dockerignore
 
 .css
+.sass
 
 .htm
 .html
 
 .xml
+
+.svg
+.svgz
 
 .md
