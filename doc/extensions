@@ -1,42 +1,55 @@
 ========================
 ==  KNOWN EXTENTIONS  ==
 ========================
-.c
+.bash
+.bashrc
+.bash_aliases
+.bash_history
+.bash_logout
 
-.cs
+.c
 
 .cpp
 
+.cs
+
+.css
+
+.docker
+.dockerfile
+.dockerignore
+
+.git
+.gitconfig
+.gitignore
+
+.go
+
 .h
 .hh
+
+.hs
+.hsc
+
+.htm
+.html
+
+.java
 
 .js
 
 .json
 
-.java
-
-.rb
-
-.go
-
-.rs
-
-.hs
-.hsc
-
-.swift
-
 .kt
 .kts
 
-.py
-.pyi
-.pyc
-.pyd
-.pyo
-.pyw
-.pyz 
+.log
+
+.lua
+
+.md
+
+.npmrc
 
 .php
 .php3
@@ -46,45 +59,34 @@
 .phps
 .php-s
 
-.vim
-.vimrc
-.viminfo
+.py
+.pyi
+.pyc
+.pyd
+.pyo
+.pyw
+.pyz
 
-.git
-.gitconfig
-.gitignore
+.rb
 
-.sh
-
-.bash
-.bashrc
-.bash_aliases
-.bash_history
-.bash_logout
-
-.log
-
-.travis
-.travis.yml
-
-.yml
-
-.npmrc
-
-.docker
-.dockerfile
-.dockerignore
-
-.css
+.rs
 
 .sass
 
-.htm
-.html
-
-.xml
+.sh
 
 .svg
 .svgz
 
-.md
+.swift
+
+.travis
+.travis.yml
+
+.vim
+.vimrc
+.viminfo
+
+.xml
+
+.yml

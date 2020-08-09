@@ -8,22 +8,69 @@
 
 const char* APPLICATION_ID = "671691503026044938";
 
-const char ext[30][12] = {
-	".docker", ".npmrc", ".travis", ".cpp", ".css",
-	".cs", ".c", ".htm", ".php", ".sh",
-	".bash", ".hs", ".h", ".java", 	".json",
-	".js", ".py", ".rb", ".rs", ".go",
-	".kt", ".sass", ".svg", ".swift", ".yml",
-	".md", ".log", ".git", ".vim", ".xml"
+const char ext[32][12] = {
+	"bash",
+	"c",
+	"cpp",
+	"cs",
+	"css",
+	"docker",
+	"git",
+	"go",
+	"h",
+	"hs",
+	"htm",
+	"java",
+	"js",
+	"json",
+	"kt",
+	"log",
+	"lua",
+	"md",
+	"npmrc",
+	"php",
+	"py",
+	"rb",
+	"rs",
+	"sass",
+	"sh",
+	"svg",
+	"swift",
+	"travis",
+	"vim",
+	"xml",
+	"yml"
 };
 
-void InitDiscord(){
+int binary_search(const char (*list)[12], char item[], int n) {
+
+	int last = n - 1;
+	int fir = 0;
+	int mid = (fir + last) / 2;
+
+	while(fir <= last) {
+
+		if(strcmp(list[mid], item) < 0) {
+			fir = mid + 1;
+		} else if(strcmp(list[mid], item) == 0) {
+			return mid;
+		} else {
+			last = mid - 1;
+		}
+
+		mid = (fir + last) / 2;
+	}
+
+	return -1;
+}
+
+void InitDiscord() {
 	DiscordEventHandlers handlers;
 	memset(&handlers, 0, sizeof(handlers));
 	Discord_Initialize(APPLICATION_ID, &handlers, 1, NULL);
 }
 
-void UpdatePresence(char *details, char *state, char *largeImageKey, char *largeImageText, time_t timestamp){
+void UpdatePresence(char *details, char *state, char *largeImageKey, char *largeImageText, time_t timestamp) {
 	DiscordRichPresence discordPresence;
 	memset(&discordPresence, 0, sizeof(discordPresence));
 
@@ -31,24 +78,25 @@ void UpdatePresence(char *details, char *state, char *largeImageKey, char *large
 	discordPresence.state = state;
 
 	int len = sizeof(ext) / sizeof(ext[0]);
-	int i = 0;
+	int index = binary_search(ext, largeImageKey, len);
 
-	while(i < len)
-	{
-		if(strstr(largeImageKey, ext[i])){
-			break;
+	if(index == -1) {
+		int b = 0;
+		    len -= 1;
+
+		for(int i = len; i != 0; i--) {
+			if(ext[i][0] == largeImageKey[0] && b == 0) {
+				if(strstr(largeImageKey, ext[i])) {
+					discordPresence.largeImageKey = ext[i];
+					b = 1;
+					break;
+				}
+			}
 		}
-		i++;
-	}
 
-	char key[32];
-
-	if(i == len){
-		discordPresence.largeImageKey = "default";
+		if(!b) discordPresence.largeImageKey = "default";
 	} else {
-		strcpy(key, ext[i]);
-		memmove(key, key + 1, strlen(key));
-		discordPresence.largeImageKey = key;
+		discordPresence.largeImageKey = ext[index];
 	}
 
 	discordPresence.largeImageText = largeImageText;
@@ -57,10 +105,10 @@ void UpdatePresence(char *details, char *state, char *largeImageKey, char *large
 	Discord_UpdatePresence(&discordPresence);
 }
 
-void MainLoop(){
+void MainLoop() {
 	time_t start = time(0);
 
-	while(!sleep(5)){
+	while(!sleep(5)) {
 		FILE *f = fopen("/tmp/vdrpc", "r");
 		if(!f) return;
 
@@ -71,13 +119,13 @@ void MainLoop(){
 		char *details = buffer[0];
 		char *state;
 
-		if(!strcmp(details, "Editing \n")){
+		if(!strcmp(details, "Editing \n")) {
 			details = "Editing an unnamed file.";
 		}
 
 		fgets(buffer[1], sizeof(buffer[1]), f);                 // get state
 
-		if(fgets(buffer[2], sizeof(buffer[2]), f) != NULL){     // get size
+		if(fgets(buffer[2], sizeof(buffer[2]), f) != NULL) {    // get size
 			state = strcat(buffer[2], " bytes");
 		} else {
 			state = buffer[1];
@@ -88,11 +136,11 @@ void MainLoop(){
 
 		int i, j, b = 0;
 
-		for(i = j = 0; details[i] != '\0'; i++){
-			if(details[i] == '.'){	// if [i - 1] -> .c = c
+		for(i = j = 0; details[i] != '\0'; i++) {
+			if(details[i - 1] == '.') {	// if [i - 1] -> .c = c
 				b = 1;
 			}
-			if(b){
+			if(b) {
 				largeImageKey[j++] = details[i];
 			}
 		}
@@ -105,7 +153,7 @@ void MainLoop(){
 	}
 }
 
-int main(){
+int main( void ) {
 	InitDiscord();
 	MainLoop();
 	Discord_Shutdown();
