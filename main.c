@@ -84,7 +84,7 @@ void UpdatePresence(char *details, char *state, char *largeImageKey, char *large
 		int b = 0;
 		    len -= 1;
 
-		for(int i = len; i != 0; i--) {
+		for(int i = len; i != -1; i--) {
 			if(ext[i][0] == largeImageKey[0] && b == 0) {
 				if(strstr(largeImageKey, ext[i])) {
 					discordPresence.largeImageKey = ext[i];
