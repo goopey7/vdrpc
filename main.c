@@ -139,12 +139,10 @@ void MainLoop() {
 		for(i = j = 0; details[i] != '\0'; i++) {
 			if(details[i - 1] == '.') {	// if [i - 1] -> .c = c
 				b = 1;
-				for(k=i;details[k] != '\0';k++)
-				{
-					largeImageText[k-i] = details[k];
-				}
+				
 			}
 			if(b) {
+				largeImageText[j] = details[i];
 				largeImageKey[j++] = details[i];
 			}
 		}
