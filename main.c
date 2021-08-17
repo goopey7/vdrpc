@@ -132,19 +132,22 @@ void MainLoop() {
 		}
 
 		char largeImageKey[32];
-		char largeImageText[128] = "text";
+		char largeImageText[128] = "";
 
-		int i, j, b = 0;
+		int i, j,k, b = 0;
 
 		for(i = j = 0; details[i] != '\0'; i++) {
 			if(details[i - 1] == '.') {	// if [i - 1] -> .c = c
 				b = 1;
+				for(k=i;details[k] != '\0';k++)
+				{
+					largeImageText[k-i] = details[k];
+				}
 			}
 			if(b) {
 				largeImageKey[j++] = details[i];
 			}
 		}
-
 		largeImageKey[strlen(largeImageKey + 1)] = '\0';	// add zero byte
 
 		UpdatePresence(details, state, largeImageKey, largeImageText, start);
